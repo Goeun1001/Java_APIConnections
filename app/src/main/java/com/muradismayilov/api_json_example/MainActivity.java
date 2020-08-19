@@ -7,10 +7,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.text.BreakIterator;
+
 public class MainActivity extends AppCompatActivity {
 
     static TextView textView;
-    EditText editText;
+    public static EditText emailText;
+    public static EditText passwordText;
+    public static EditText usernameText;
     Button button;
 
     @Override
@@ -19,7 +23,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         textView = findViewById(R.id.textView);
-        editText = findViewById(R.id.editText);
+        emailText = findViewById(R.id.emailField);
+        passwordText = findViewById(R.id.passwordField);
+        usernameText = findViewById(R.id.usernameField);
         button = findViewById(R.id.button);
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -28,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
                 DownloadData downloadData = new DownloadData();
 
-                String url = "https://api.openweathermap.org/data/2.5/weather?q=" + editText.getText().toString() + "&appid=0afe4b849a02440229c8ac5e00332b51";
+                String url = "https://mini-avocat-1.herokuapp.com/users/create/";
                 downloadData.execute(url);
             }
         });
