@@ -1,13 +1,23 @@
-package com.muradismayilov.api_json_example;
+package com.muradismayilov.api_json_example.View;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.muradismayilov.api_json_example.Controller.GitHubClient;
+import com.muradismayilov.api_json_example.Model.Pojo.GitHubRepo;
+import com.muradismayilov.api_json_example.Model.Adapter.GitHubRepoAdapter;
+import com.muradismayilov.api_json_example.R;
+
 import java.util.List;
 import rx.Observer;
 import rx.Subscription;
@@ -29,6 +39,30 @@ public class MainActivity extends AppCompatActivity {
 
         final EditText editTextUsername = (EditText) findViewById(R.id.edit_text_username);
         final Button buttonSearch = (Button) findViewById(R.id.button_search);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                GitHubRepo selectedGithub = GitHubRepoAdapter.getSelectedGithubRepo(position);
+                Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+                Bundle bundle = new Bundle();
+
+                bundle.putString("name", selectedGithub.name);
+                bundle.putString("description", selectedGithub.description);
+                bundle.putString("language", selectedGithub.language);
+                StringBuilder str = new StringBuilder(selectedGithub.created_at);
+                int startIdx = str.indexOf("T");
+                int endIdx = str.indexOf("Z");
+                str.replace(startIdx, ++endIdx, "");
+                String string = str.toString().replace('-', '/');
+                bundle.putString("created", string);
+                bundle.putString("stars", new String(String.valueOf(selectedGithub.stargazersCount)));
+                bundle.putString("htmlUrl", selectedGithub.htmlUrl);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
         buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 final String username = editTextUsername.getText().toString();

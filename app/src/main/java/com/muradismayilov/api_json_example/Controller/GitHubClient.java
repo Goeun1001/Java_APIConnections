@@ -1,9 +1,12 @@
-package com.muradismayilov.api_json_example;
+package com.muradismayilov.api_json_example.Controller;
 
 import android.support.annotation.NonNull;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.muradismayilov.api_json_example.Model.Pojo.GitHubRepo;
+import com.muradismayilov.api_json_example.Model.callback.GitHubService;
+
 import java.util.List;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
